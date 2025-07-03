@@ -1,0 +1,33 @@
+#top-menu {
+    background-color: #36266b ;
+}
+
+#header {
+    background-color: #614ba6 ;
+} 
+
+#sidebar {
+    max-width: 250px ;
+}
+
+tr.context-menu-selection td.crtical {
+    color: #ffffff ;
+}
+
+td.priority {
+    color: #000000 ;
+}
+
+td.priority:hover {
+    color: #000000 ;
+}
+
+td.critical {
+    background-color: #ffc7c7;
+    color: #000000 ;
+}
+
+td.high {
+    background-color: #f98484;
+    color: #000000 ;
+}
