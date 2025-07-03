@@ -28,7 +28,7 @@
     }
 
     // --- 1b. Ajouter le CSS d'override juste après le lien PurpleMine ---
-    const overrideHref = "https://raw.githubusercontent.com/loitiSmile/redmine-overrides/refs/heads/master/overrides.css";
+    const overrideHref = "https://raw.githubusercontent.com/loitiSmile/redmine-overrides/master/overrides.css";
 
     // On attend un peu pour s'assurer que le DOM est prêt après remplacement
     setTimeout(() => {
