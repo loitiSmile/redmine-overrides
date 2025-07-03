@@ -1,33 +1,33 @@
 #top-menu {
-    background-color: #36266b ;
+    background-color: #36266b !important;
 }
 
 #header {
-    background-color: #614ba6 ;
+    background-color: #614ba6 !important;
 } 
 
 #sidebar {
-    max-width: 250px ;
+    max-width: 250px !important;
 }
 
 tr.context-menu-selection td.crtical {
-    color: #ffffff ;
+    color: #ffffff !important;
 }
 
 td.priority {
-    color: #000000 ;
+    color: #000000 !important;
 }
 
 td.priority:hover {
-    color: #000000 ;
+    color: #000000 !important;
 }
 
 td.critical {
-    background-color: #ffc7c7;
-    color: #000000 ;
+    background-color: #ffc7c7 !important;
+    color: #000000 !important;
 }
 
 td.high {
-    background-color: #f98484;
-    color: #000000 ;
+    background-color: #f98484 !important;
+    color: #000000 !important;
 }
