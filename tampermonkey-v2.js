@@ -27,6 +27,24 @@
         }
     }
 
+    // --- 1b. Ajouter le CSS d'override juste après le lien PurpleMine ---
+    const overrideHref = "https://raw.githubusercontent.com/loitiSmile/redmine-overrides/refs/heads/master/overrides.css";
+
+    // On attend un peu pour s'assurer que le DOM est prêt après remplacement
+    setTimeout(() => {
+        const purpleMineLink = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
+            .find(link => link.href.includes('/stylesheets/application.css'));
+
+        if (purpleMineLink) {
+            const overrideLink = document.createElement("link");
+            overrideLink.rel = "stylesheet";
+            overrideLink.media = "all";
+            overrideLink.href = overrideHref;
+
+            purpleMineLink.parentNode.insertBefore(overrideLink, purpleMineLink.nextSibling);
+        }
+    }, 100); // délai léger pour laisser le remplacement s’effectuer
+
     // --- 2. Appliquer les couleurs de priorité ---
     const applyPriorityColors = () => {
         document.querySelectorAll('td.priority').forEach(td => {
