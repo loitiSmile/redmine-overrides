@@ -22,12 +22,12 @@ td.priority:hover {
     color: #000000 !important;
 }
 
-td.critical {
+td.high {
     background-color: #ffc7c7 !important;
     color: #000000 !important;
 }
 
-td.high {
+td.crtical {
     background-color: #f98484 !important;
     color: #000000 !important;
 }
