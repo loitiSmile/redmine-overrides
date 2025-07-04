@@ -1,11 +1,13 @@
 // ==UserScript==
 // @name         Redmine5 - OVERRIDE CSS & PRIORITY COLORS (local)
-// @description  Compute overrides CSS and apply priority colors dynamically in Redmine 5
-// @downloadURL https://raw.githubusercontent.com/loitiSmile/redmine-overrides/master/tampermonkey-v1.js
 // @author       loitiSmile
+// @description  Compute overrides CSS and apply priority colors dynamically in Redmine 5
+// @downloadURL  https://raw.githubusercontent.com/loitiSmile/redmine-overrides/master/tampermonkey-v1.js
+// @supportURL   https://github.com/loitiSmile/redmine-overrides
+// @license      GPL-3.0
+// @version      1.0.3
 // @tag          production
 // @tag          browser-compute
-// @version      1.0.2
 // @match        *://*/*
 // @run-at       document-start
 // ==/UserScript==
