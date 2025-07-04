@@ -1,13 +1,21 @@
 // ==UserScript==
 // @name         Redmine5 - OVERRIDE CSS & PRIORITY COLORS
+// @description  Injects custom CSS overrides and applies priority colors dynamically in Redmine 5
+// @author       loitiSmile
+// @tag          injectCSS
+// @version      2.0.0
 // @match        *://*/*
-// @run-at       document-idle
+// @run-at       document-start
 // ==/UserScript==
 
 (function () {
     'use strict';
+    // At the very start, hide the page to prevent flickering
+    document.documentElement.style.visibility = 'hidden';
 
-    // --- 1. Remplacer application.css avec version dynamique ---
+    // --- 1. Replace application.css with dynamic version ---
+    // --- Get the timestamp from Redmine's jQuery UI file ---
+    // This is used to ensure that the correct version of the CSS is loaded
     const sourceLink = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
         .find(link => link.href.includes('/stylesheets/jquery/jquery-ui-1.13.2.css'));
 
@@ -27,25 +35,34 @@
         }
     }
 
-    // --- 1b. Ajouter le CSS d'override juste après le lien PurpleMine ---
+    // --- 2. Inject CSS overrides from Github's sources ---
     const overrideHref = "https://raw.githubusercontent.com/loitiSmile/redmine-overrides/master/overrides.css";
+    // Fetch the override CSS file from GitHub
+    fetch(overrideHref)
+        .then(response => {
+            if (!response.ok) throw new Error("Tampermonkey: Erreur chargement CSS override");
+            return response.text();
+        })
+        .then(cssText => {
+            const style = document.createElement('style');
+            style.textContent = cssText;
+            document.head.appendChild(style);
 
-    // On attend un peu pour s'assurer que le DOM est prêt après remplacement
-    setTimeout(() => {
-        const purpleMineLink = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
-            .find(link => link.href.includes('/stylesheets/application.css'));
+            // --- Make the page visible after CSS injection ---
+            // This ensures that the page is only visible after the CSS has been applied and prevents flickering.
+            document.documentElement.style.visibility = 'visible';
 
-        if (purpleMineLink) {
-            const overrideLink = document.createElement("link");
-            overrideLink.rel = "stylesheet";
-            overrideLink.media = "all";
-            overrideLink.href = overrideHref;
+            console.log("Tampermonkey: Override CSS injecté et page visible");
+        })
+        .catch(e => {
+            console.error("Tampermonkey: Erreur injection CSS override:", e);
+            // Make the page visible even if the CSS fails to load
+            // This prevents the page from being stuck hidden in case of an error.
+            document.documentElement.style.visibility = 'visible';
+        });
 
-            purpleMineLink.parentNode.insertBefore(overrideLink, purpleMineLink.nextSibling);
-        }
-    }, 100); // délai léger pour laisser le remplacement s’effectuer
-
-    // --- 2. Appliquer les couleurs de priorité ---
+    // --- 3. Adds priority colors dynamically ---
+    // This function applies specific styles to priority cells based on their text content
     const applyPriorityColors = () => {
         document.querySelectorAll('td.priority').forEach(td => {
             const text = td.textContent.trim().toLowerCase();
@@ -63,11 +80,11 @@
                     break;
                 case 'high':
                 case 'haute':
-                    td.classList.add("medium");
+                    td.classList.add("high");
                     break;
                 case 'critique':
                 case 'critical':
-                    td.classList.add("high");
+                    td.classList.add("critical");
                     break;
                 default:
                     break;
@@ -75,15 +92,12 @@
         });
     };
 
-    // --- 3. Exécuter toutes les règles ---
-    const runAll = () => {
+    // --- 4. Apply priority colors on initial load and dynamically ---
+    // This ensures that the priority colors are applied both on initial load
+    window.addEventListener('DOMContentLoaded', () => {
         applyPriorityColors();
-    };
-
-    // Initialisation
-    runAll();
-
-    // Observer les changements dynamiques
-    const observer = new MutationObserver(runAll);
-    observer.observe(document.body, { childList: true, subtree: true });
+        // Observe changes in the document body to apply priority colors dynamically
+        const observer = new MutationObserver(applyPriorityColors);
+        observer.observe(document.body, { childList: true, subtree: true });
+    });
 })();
