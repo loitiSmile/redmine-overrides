@@ -5,7 +5,7 @@
 // @author       loitiSmile
 // @tag          production
 // @tag          browser-compute
-// @version      1.0.1
+// @version      1.0.2
 // @match        *://*/*
 // @run-at       document-start
 // ==/UserScript==
@@ -82,18 +82,18 @@
             max-width: 250px !important;
         }
         
-        
+
         td.priority:hover {
             color: #000000 !important;
         }
         
         td.critical {
-            background-color: #ffc7c7 !important;
+            background-color: #f98484 !important;
             color: #000000 !important;
         }
         
         td.high {
-            background-color: #f98484 !important;
+            background-color: #ffc7c7 !important;
             color: #000000 !important;
         }
     `;
