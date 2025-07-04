@@ -1,24 +1,29 @@
 // ==UserScript==
-// @name         Custom Style & CSS Replacement
+// @name         Redmine5 - OVERRIDE CSS & PRIORITY COLORS (local)
+// @description  Compute overrides CSS and apply priority colors dynamically in Redmine 5
+// @author       loitiSmile
+// @tag          browserOverride
+// @version      1.0.0
 // @match        *://*/*
 // @run-at       document-start
 // ==/UserScript==
 
 (function() {
     'use strict';
-    // Masquer la page au tout début
+    // At the very start, hide the page to prevent flickering
     document.documentElement.style.visibility = 'hidden';
-    // --- 1. Remplacer application.css avec version dynamique ---
-    // --- 1a. Récupération du timestamp de redmine à partir du fichier jQuery UI ---
+
+    // --- 1. Replace application.css with dynamic version ---
+    // --- Get the timestamp from Redmine's jQuery UI file ---
+    // This is used to ensure that the correct version of the CSS is loaded
     const sourceLink = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
-    .find(link => link.href.includes('/stylesheets/jquery/jquery-ui-1.13.2.css'));
-    
+        .find(link => link.href.includes('/stylesheets/jquery/jquery-ui-1.13.2.css'));
+
     if (sourceLink) {
         const queryStringMatch = sourceLink.href.match(/\?(\d+)$/);
         if (queryStringMatch) {
             const queryString = queryStringMatch[1];
-            
-            // --- 1b. Remplacement des liens PurpleMine par le nouveau lien ---
+
             const targetLinks = document.querySelectorAll('link[rel="stylesheet"][href*="/themes/PurpleMine/stylesheets/application.css"]');
             targetLinks.forEach(link => {
                 const newLink = document.createElement("link");
@@ -30,7 +35,8 @@
         }
     }
     
-    // --- 2. Ajout d'une classe CSS pour gérer les priorités ---
+    // --- 2. Add priority colors dynamically ---
+    // This function applies specific styles to priority cells based on their text content
     const applyPriorityColors = () => {
         document.querySelectorAll('td.priority').forEach(td => {
             const text = td.textContent.trim().toLowerCase();
@@ -48,13 +54,13 @@
                 case 'haute':
                 td.style.backgroundColor = '#ffc7c7';
                 td.style.color = '#000000';
-                td.classList.add("medium");
+                td.classList.add("high");
                 break;
                 case 'critique':
                 case 'critical':
                 td.style.backgroundColor = '#f98484';
                 td.style.color = '#000000';
-                td.classList.add("high");
+                td.classList.add("critical");
                 break;
                 default:
                 break;
@@ -62,7 +68,7 @@
         });
     };
     
-    // --- 3. Injection des overrides dans une balise <style> ---
+    // --- 3. Inject CSS overrides in <style> ---
     const injectStyleOverrides = () => {
         const style = document.createElement('style');
         style.textContent = `
@@ -95,10 +101,10 @@
     };
     
     
-    // Afficher la page
+    // --- Make the page visible after CSS injection ---
     document.documentElement.style.visibility = 'visible';
     
-    // Exécuter après DOM ready
+    // --- 4. Apply overrides on initial load and dynamically ---
     window.addEventListener('DOMContentLoaded', () => {
         applyPriorityColors();
         injectStyleOverrides();
