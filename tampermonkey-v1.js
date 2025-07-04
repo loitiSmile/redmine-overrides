@@ -5,7 +5,7 @@
 // @author       loitiSmile
 // @tag          production
 // @tag          browser-compute
-// @version      1.0.0
+// @version      1.0.1
 // @match        *://*/*
 // @run-at       document-start
 // ==/UserScript==
