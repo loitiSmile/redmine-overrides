@@ -54,14 +54,10 @@
                 break;
                 case 'high':
                 case 'haute':
-                td.style.backgroundColor = '#ffc7c7';
-                td.style.color = '#000000';
                 td.classList.add("high");
                 break;
                 case 'critique':
                 case 'critical':
-                td.style.backgroundColor = '#f98484';
-                td.style.color = '#000000';
                 td.classList.add("critical");
                 break;
                 default:
@@ -93,10 +89,12 @@
         
         td.critical {
             background-color: #ffc7c7 !important;
+            color: #000000 !important;
         }
         
         td.high {
             background-color: #f98484 !important;
+            color: #000000 !important;
         }
     `;
         document.head.appendChild(style);
