@@ -3,9 +3,10 @@
 // @author       loitiSmile
 // @description  Injects custom CSS overrides and applies priority colors dynamically in Redmine 5
 // @downloadURL  https://raw.githubusercontent.com/loitiSmile/redmine-overrides/master/tampermonkey-v2.js
+// @updateURL    https://raw.githubusercontent.com/loitiSmile/redmine-overrides/master/tampermonkey-v2.js
 // @supportURL   https://github.com/loitiSmile/redmine-overrides
 // @license      GPL-3.0
-// @version      2.0.2
+// @version      2.0.3
 // @tag          production
 // @tag          github-fetch
 // @match        https://*.alterway.fr/*

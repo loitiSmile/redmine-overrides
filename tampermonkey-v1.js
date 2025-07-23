@@ -3,9 +3,10 @@
 // @author       loitiSmile
 // @description  Compute overrides CSS and apply priority colors dynamically in Redmine 5
 // @downloadURL  https://raw.githubusercontent.com/loitiSmile/redmine-overrides/master/tampermonkey-v1.js
+// @updateURL    https://raw.githubusercontent.com/loitiSmile/redmine-overrides/master/tampermonkey-v1.js
 // @supportURL   https://github.com/loitiSmile/redmine-overrides
 // @license      GPL-3.0
-// @version      1.0.4
+// @version      1.0.5
 // @tag          production
 // @tag          browser-compute
 // @match        https://*.alterway.fr/*
