@@ -8,7 +8,7 @@
 // @version      2.0.1
 // @tag          production
 // @tag          github-fetch
-// @match        *://*/*
+// @match        https://*.alterway.fr/*
 // @run-at       document-start
 // ==/UserScript==
 

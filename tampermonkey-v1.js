@@ -8,7 +8,7 @@
 // @version      1.0.3
 // @tag          production
 // @tag          browser-compute
-// @match        *://*/*
+// @match        https://*.alterway.fr/*
 // @run-at       document-start
 // ==/UserScript==
 
