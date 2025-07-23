@@ -5,7 +5,7 @@
 // @downloadURL  https://raw.githubusercontent.com/loitiSmile/redmine-overrides/master/tampermonkey-v2.js
 // @supportURL   https://github.com/loitiSmile/redmine-overrides
 // @license      GPL-3.0
-// @version      2.0.1
+// @version      2.0.2
 // @tag          production
 // @tag          github-fetch
 // @match        https://*.alterway.fr/*
