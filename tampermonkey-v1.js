@@ -70,177 +70,208 @@
     const injectStyleOverrides = () => {
         const style = document.createElement('style');
         style.textContent = `
-        /* Global Contrast & Typography */
+        /* 1. Global typography and fonts (Classic Redmine uses Verdana) */
         body, #content, table.list, p, td, th, li, span, div {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif !important;
-            color: #111111 !important;
-            font-size: 13px !important;
-            line-height: 1.45 !important;
+            font-family: Verdana, sans-serif !important;
+            color: #333333 !important;
+            font-size: 12px !important;
+            line-height: 1.4 !important;
         }
 
-        /* Purple Accents */
+        /* 2. Top Menu - Classic Dark Slate/Blue */
         #top-menu {
-            background-color: #36266b !important;
-            padding: 5px 10px !important;
+            background-color: #3e5b76 !important;
+            padding: 3px 10px !important;
+            height: auto !important;
         }
         #top-menu a {
             color: #ffffff !important;
-            font-weight: bold !important;
-            font-size: 11px !important;
+            font-weight: normal !important;
+            font-size: 10px !important;
+            padding: 2px 6px !important;
         }
         #top-menu a:hover {
-            background-color: #24194c !important;
+            background-color: #2e435a !important;
+            text-decoration: underline !important;
         }
 
+        /* 3. Header - Classic Soft Slate/Blue */
         #header {
-            background-color: #614ba6 !important;
-            border-bottom: 3px solid #36266b !important;
-            padding: 12px 20px !important;
+            background-color: #628db6 !important;
+            border-bottom: none !important;
+            padding: 10px 20px 5px 20px !important;
+            min-height: 55px !important;
         }
         #header h1 {
             color: #ffffff !important;
+            font-family: "Trebuchet MS", Verdana, sans-serif !important;
             font-size: 20px !important;
             font-weight: bold !important;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            text-shadow: none !important;
         }
 
-        /* Headings */
-        h1, h2, h3, h4 {
-            color: #24194c !important;
+        /* 4. Main Menu - Tabs */
+        #main-menu {
+            background-color: #628db6 !important;
+            margin-left: 0 !important;
+            padding-left: 10px !important;
+        }
+        #main-menu ul {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        #main-menu ul li {
+            display: inline-block !important;
+            margin-right: 2px !important;
+        }
+        #main-menu ul li a {
+            background-color: #3e5b76 !important;
+            color: #e4e4e4 !important;
             font-weight: bold !important;
-            border-bottom: 2px solid #614ba6 !important;
+            border: none !important;
+            padding: 4px 10px !important;
+            font-size: 11px !important;
+            border-top-left-radius: 3px !important;
+            border-top-right-radius: 3px !important;
+            text-decoration: none !important;
+        }
+        #main-menu ul li a:hover {
+            background-color: #2e435a !important;
+            color: #ffffff !important;
+        }
+        #main-menu ul li a.selected {
+            background-color: #ffffff !important;
+            color: #1b4f72 !important;
+            font-weight: bold !important;
+            border-bottom: none !important;
+        }
+
+        /* 5. Headings */
+        h1, h2, h3, h4 {
+            color: #444444 !important;
+            font-family: "Trebuchet MS", Verdana, sans-serif !important;
+            font-weight: bold !important;
+            border-bottom: 1px solid #cccccc !important;
+            padding-bottom: 2px !important;
             margin-top: 15px !important;
             margin-bottom: 10px !important;
-            padding-bottom: 3px !important;
+        }
+        h2 {
+            font-size: 16px !important;
+        }
+        h3 {
+            font-size: 14px !important;
         }
 
-        /* Dense & Zebra-striped Tables */
+        /* 6. Standard Redmine Links */
+        a, a:link, a:visited {
+            color: #169 !important;
+            text-decoration: none !important;
+        }
+        a:hover, a:active {
+            color: #c61a1a !important;
+            text-decoration: underline !important;
+        }
+
+        /* 7. Classic Tables with light borders and Verdana fonts */
         table.list {
             border-collapse: collapse !important;
             width: 100% !important;
-            border: 1.5px solid #999999 !important;
-            margin-top: 10px !important;
-            margin-bottom: 15px !important;
+            border: 1px solid #e4e4e4 !important;
+            margin: 10px 0 !important;
             background-color: #ffffff !important;
         }
         table.list th {
-            background-color: #f0edf5 !important;
-            color: #111111 !important;
+            background-color: #eeeeee !important;
+            color: #000000 !important;
             font-weight: bold !important;
-            border: 1.5px solid #999999 !important;
-            padding: 6px 8px !important;
-            text-align: left !important;
+            border: 1px solid #e4e4e4 !important;
+            padding: 4px 6px !important;
+            font-size: 11px !important;
         }
         table.list td {
-            border: 1px solid #cccccc !important;
-            padding: 6px 8px !important;
+            border: 1px solid #e4e4e4 !important;
+            padding: 4px 6px !important;
         }
         table.list tbody tr:nth-child(even) {
-            background-color: #f7f7f9 !important;
+            background-color: #f6f8fc !important;
         }
         table.list tbody tr:nth-child(odd) {
             background-color: #ffffff !important;
         }
         table.list tbody tr:hover {
-            background-color: #ece7f4 !important;
+            background-color: #eff4fa !important;
         }
 
-        /* Priority Colors on Cells */
+        /* 8. Priorities (Classic colors, very soft and non-intrusive) */
         td.priority {
-            font-weight: bold !important;
-            text-align: center !important;
-        }
-        td.priority:hover {
-            color: #000000 !important;
+            text-align: left !important;
+            font-weight: normal !important;
         }
         td.low {
-            background-color: #e2f0d9 !important;
-            color: #385723 !important;
+            background-color: inherit !important;
+            color: inherit !important;
         }
         td.medium {
-            background-color: #fff2cc !important;
-            color: #7f6000 !important;
+            background-color: inherit !important;
+            color: inherit !important;
         }
         td.high {
-            background-color: #ffc7c7 !important;
-            color: #c00000 !important;
-            border: 1px solid #ff7e7e !important;
+            background-color: #ffdddd !important;
+            color: #900000 !important;
         }
         td.critical {
-            background-color: #f98484 !important;
-            color: #000000 !important;
-            border: 1px solid #ff0000 !important;
+            background-color: #ffbbbb !important;
+            color: #900000 !important;
+            font-weight: bold !important;
         }
 
-        /* Priority Row-Level Highlights */
+        /* Row-level priorities */
         tr.priority-lowest { background-color: #fafafa !important; }
-        tr.priority-lowest:hover { background-color: #ededed !important; }
-
         tr.priority-default { background-color: #ffffff !important; }
-
         tr.priority-high3, tr.priority-high4, tr.priority-high5 {
-            background-color: #ffe8e8 !important;
+            background-color: #ffeedd !important;
         }
-        tr.priority-high3:hover, tr.priority-high4:hover, tr.priority-high5:hover {
-            background-color: #ffd4d4 !important;
-        }
-
         tr.priority-highest {
-            background-color: #ffcccc !important;
-        }
-        tr.priority-highest:hover {
-            background-color: #ffbaba !important;
+            background-color: #ffdddd !important;
         }
 
-        /* Structured Sidebar */
+        /* 9. Sidebar */
         #sidebar {
-            background-color: #fbfbfd !important;
-            border-left: 1.5px solid #dcdce6 !important;
-            padding: 15px !important;
+            background-color: #f6f6f6 !important;
+            border-left: 1px solid #e4e4e4 !important;
+            padding: 10px !important;
             max-width: 250px !important;
         }
         #sidebar h3 {
-            font-size: 13px !important;
-            color: #36266b !important;
-            border-bottom: 2px solid #614ba6 !important;
-            padding-bottom: 4px !important;
-            text-transform: uppercase !important;
+            font-size: 12px !important;
+            color: #333333 !important;
+            border-bottom: 1px solid #cccccc !important;
+            padding-bottom: 3px !important;
+            margin-top: 10px !important;
+            text-transform: none !important;
         }
 
-        /* Inputs & Textareas */
+        /* 10. Forms and buttons (Traditional design) */
         input[type="text"], input[type="password"], select, textarea {
-            border: 1.5px solid #999999 !important;
-            padding: 5px 8px !important;
-            border-radius: 4px !important;
-            color: #000000 !important;
-            background-color: #ffffff !important;
+            border: 1px solid #cccccc !important;
+            padding: 3px 5px !important;
+            font-size: 12px !important;
+            border-radius: 2px !important;
         }
-        input[type="text"]:focus, input[type="password"]:focus, select:focus, textarea:focus {
-            border-color: #614ba6 !important;
-            box-shadow: 0 0 4px rgba(97, 75, 166, 0.4) !important;
+        input[type="submit"], input[type="button"], button {
+            background-color: #f2f2f2 !important;
+            border: 1px solid #cccccc !important;
+            border-radius: 2px !important;
+            padding: 3px 8px !important;
+            color: #333333 !important;
+            cursor: pointer !important;
         }
-
-        /* Flash banners */
-        .flash {
-            padding: 10px 15px !important;
-            border-radius: 4px !important;
-            margin-bottom: 15px !important;
-            font-weight: bold !important;
-        }
-        .flash.notice {
-            background-color: #e2f0d9 !important;
-            border: 1.5px solid #70ad47 !important;
-            color: #385723 !important;
-        }
-        .flash.error {
-            background-color: #fce4d6 !important;
-            border: 1.5px solid #c00000 !important;
-            color: #c00000 !important;
-        }
-        .flash.warning {
-            background-color: #fff2cc !important;
-            border: 1.5px solid #ffc000 !important;
-            color: #7f6000 !important;
+        input[type="submit"]:hover, input[type="button"]:hover, button:hover {
+            background-color: #e4e4e4 !important;
+            border-color: #adadad !important;
         }
     `;
         document.head.appendChild(style);
