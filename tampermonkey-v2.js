@@ -1,12 +1,12 @@
 // ==UserScript==
-// @name         Redmine5 - OVERRIDE CSS & PRIORITY COLORS (github)
+// @name         Redmine - OVERRIDE CSS & PRIORITY COLORS (github)
 // @author       loitiSmile
-// @description  Injects custom CSS overrides and applies priority colors dynamically in Redmine 5
+// @description  Injects custom CSS overrides and applies priority colors dynamically in Redmine 6 (Opale theme)
 // @downloadURL  https://raw.githubusercontent.com/loitiSmile/redmine-overrides/master/tampermonkey-v2.js
 // @updateURL    https://raw.githubusercontent.com/loitiSmile/redmine-overrides/master/tampermonkey-v2.js
 // @supportURL   https://github.com/loitiSmile/redmine-overrides
 // @license      GPL-3.0
-// @version      2.0.3
+// @version      2.1.0
 // @tag          production
 // @tag          github-fetch
 // @match        https://*.alterway.fr/*
@@ -18,9 +18,7 @@
     // At the very start, hide the page to prevent flickering
     document.documentElement.style.visibility = 'hidden';
 
-    // --- 1. Replace application.css with dynamic version ---
-    // --- Get the timestamp from Redmine's jQuery UI file ---
-    // This is used to ensure that the correct version of the CSS is loaded
+    // --- 1. Replace application.css (legacy Redmine 5 cleanup) ---
     const sourceLink = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
         .find(link => link.href.includes('/stylesheets/jquery/jquery-ui-1.13.2.css'));
 
