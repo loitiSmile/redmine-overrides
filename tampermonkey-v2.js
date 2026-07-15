@@ -2,8 +2,8 @@
 // @name         Redmine - OVERRIDE CSS & PRIORITY COLORS (github)
 // @author       loitiSmile
 // @description  Injects custom CSS overrides and applies priority colors dynamically in Redmine 6 (Opale theme)
-// @downloadURL  https://raw.githubusercontent.com/loitiSmile/redmine-overrides/master/tampermonkey-v2.js
-// @updateURL    https://raw.githubusercontent.com/loitiSmile/redmine-overrides/master/tampermonkey-v2.js
+// @downloadURL  https://raw.githubusercontent.com/loitiSmile/redmine-overrides/feat/redmine6-overrides/tampermonkey-v2.js
+// @updateURL    https://raw.githubusercontent.com/loitiSmile/redmine-overrides/feat/redmine6-overrides/tampermonkey-v2.js
 // @supportURL   https://github.com/loitiSmile/redmine-overrides
 // @license      GPL-3.0
 // @version      2.1.0
@@ -39,7 +39,7 @@
     }
 
     // --- 2. Inject CSS overrides from Github's sources ---
-    const overrideHref = "https://raw.githubusercontent.com/loitiSmile/redmine-overrides/master/overrides.css";
+    const overrideHref = "https://raw.githubusercontent.com/loitiSmile/redmine-overrides/feat/redmine6-overrides/overrides.css";
     // Fetch the override CSS file from GitHub
     fetch(overrideHref)
         .then(response => {

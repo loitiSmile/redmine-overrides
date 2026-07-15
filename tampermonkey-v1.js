@@ -2,8 +2,8 @@
 // @name         Redmine - OVERRIDE CSS & PRIORITY COLORS (local)
 // @author       loitiSmile
 // @description  Compute overrides CSS and apply priority colors dynamically in Redmine 6 (Opale theme)
-// @downloadURL  https://raw.githubusercontent.com/loitiSmile/redmine-overrides/master/tampermonkey-v1.js
-// @updateURL    https://raw.githubusercontent.com/loitiSmile/redmine-overrides/master/tampermonkey-v1.js
+// @downloadURL  https://raw.githubusercontent.com/loitiSmile/redmine-overrides/feat/redmine6-overrides/tampermonkey-v1.js
+// @updateURL    https://raw.githubusercontent.com/loitiSmile/redmine-overrides/feat/redmine6-overrides/tampermonkey-v1.js
 // @supportURL   https://github.com/loitiSmile/redmine-overrides
 // @license      GPL-3.0
 // @version      1.1.0
