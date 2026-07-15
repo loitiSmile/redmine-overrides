@@ -6,6 +6,14 @@
     background-color: #614ba6 !important;
 } 
 
+#main-menu ul li a.selected {
+    color: #614ba6 !important;
+}
+
+#main-menu ul li a:hover {
+    background-color: #4d369c !important;
+}
+
 #sidebar {
     max-width: 250px !important;
 }
@@ -24,6 +32,11 @@ td.priority:hover {
 
 td.high {
     background-color: #ffc7c7 !important;
+    color: #000000 !important;
+}
+
+td.critical {
+    background-color: #f98484 !important;
     color: #000000 !important;
 }
 
