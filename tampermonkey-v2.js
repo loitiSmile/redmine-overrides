@@ -1,12 +1,12 @@
 // ==UserScript==
-// @name         Redmine6 - OVERRIDE CSS & PRIORITY COLORS (github)
+// @name         Redmine - RESTORE DEFAULT CLASSIC THEME (github)
 // @author       loitiSmile
-// @description  Injects custom CSS overrides and applies priority colors dynamically in Redmine 6 (Opale theme)
+// @description  Disables the Opale theme and loads the default Redmine 6 classic stylesheet from jsDelivr CDN
 // @downloadURL  https://raw.githubusercontent.com/loitiSmile/redmine-overrides/feat/redmine6-overrides/tampermonkey-v2.js
 // @updateURL    https://raw.githubusercontent.com/loitiSmile/redmine-overrides/feat/redmine6-overrides/tampermonkey-v2.js
 // @supportURL   https://github.com/loitiSmile/redmine-overrides
 // @license      GPL-3.0
-// @version      2.1.0
+// @version      2.2.0
 // @tag          production
 // @tag          github-fetch
 // @match        https://*.alterway.fr/*
@@ -18,24 +18,46 @@
     // At the very start, hide the page to prevent flickering
     document.documentElement.style.visibility = 'hidden';
 
-    // --- 1. Replace application.css (legacy Redmine 5 cleanup) ---
-    const sourceLink = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
-        .find(link => link.href.includes('/stylesheets/jquery/jquery-ui-1.13.2.css'));
-
-    if (sourceLink) {
-        const queryStringMatch = sourceLink.href.match(/\?(\d+)$/);
-        if (queryStringMatch) {
-            const queryString = queryStringMatch[1];
-
-            const targetLinks = document.querySelectorAll('link[rel="stylesheet"][href*="/themes/PurpleMine/stylesheets/application.css"]');
-            targetLinks.forEach(link => {
-                const newLink = document.createElement("link");
-                newLink.rel = "stylesheet";
-                newLink.media = "all";
-                newLink.href = `/stylesheets/application.css?${queryString}`;
-                link.parentNode.replaceChild(newLink, link);
-            });
+    // Function to disable Opale and inject official Default Redmine 6 stylesheet
+    const applyDefaultTheme = () => {
+        // 1. Find and remove/disable Opale theme stylesheet
+        const opaleLink = document.querySelector('link[rel="stylesheet"][href*="/themes/opale/application"]');
+        if (opaleLink) {
+            opaleLink.disabled = true;
+            opaleLink.remove();
         }
+
+        // 2. Create and inject the official Redmine 6.0 default stylesheet from jsDelivr CDN
+        const defaultLink = document.createElement("link");
+        defaultLink.id = "redmine-default-theme";
+        defaultLink.rel = "stylesheet";
+        defaultLink.media = "all";
+        defaultLink.href = "https://cdn.jsdelivr.net/gh/redmine/redmine@6.0-stable/app/assets/stylesheets/application.css";
+        
+        // Show page as soon as the stylesheet is loaded or fails
+        defaultLink.onload = () => {
+            document.documentElement.style.visibility = 'visible';
+            console.log("Tampermonkey: Default Redmine 6 theme loaded successfully.");
+        };
+        defaultLink.onerror = () => {
+            document.documentElement.style.visibility = 'visible';
+            console.error("Tampermonkey: Failed to load default Redmine 6 stylesheet.");
+        };
+
+        document.head.appendChild(defaultLink);
+    };
+
+    // --- Apply on document-start to prevent flash of Opale theme ---
+    if (document.head) {
+        applyDefaultTheme();
+    } else {
+        const observer = new MutationObserver((mutations, obs) => {
+            if (document.head) {
+                applyDefaultTheme();
+                obs.disconnect();
+            }
+        });
+        observer.observe(document.documentElement, { childList: true, subtree: true });
     }
 
     // --- 2. Inject CSS overrides from Github's sources ---
@@ -50,28 +72,20 @@
             const style = document.createElement('style');
             style.textContent = cssText;
             document.head.appendChild(style);
-
-            // --- Make the page visible after CSS injection ---
-            // This ensures that the page is only visible after the CSS has been applied and prevents flickering.
-            document.documentElement.style.visibility = 'visible';
-
-            console.log("Tampermonkey: Override CSS injecté et page visible");
+            console.log("Tampermonkey: Override CSS injecté");
         })
         .catch(e => {
             console.error("Tampermonkey: Erreur injection CSS override:", e);
-            // Make the page visible even if the CSS fails to load
-            // This prevents the page from being stuck hidden in case of an error.
+            // Ensure page is visible even if overrides fail
             document.documentElement.style.visibility = 'visible';
         });
 
     // --- 3. Adds priority colors dynamically ---
-    // This function applies specific styles to priority cells based on their text content
     const applyPriorityColors = () => {
         document.querySelectorAll('td.priority').forEach(td => {
             const text = td.textContent.trim().toLowerCase();
 
             switch (text) {
-
                 case 'low':
                 case 'basse':
                     td.classList.add("low");
@@ -96,10 +110,8 @@
     };
 
     // --- 4. Apply priority colors on initial load and dynamically ---
-    // This ensures that the priority colors are applied both on initial load
     window.addEventListener('DOMContentLoaded', () => {
         applyPriorityColors();
-        // Observe changes in the document body to apply priority colors dynamically
         const observer = new MutationObserver(applyPriorityColors);
         observer.observe(document.body, { childList: true, subtree: true });
     });
