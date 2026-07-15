@@ -6,7 +6,7 @@
 // @updateURL    https://raw.githubusercontent.com/loitiSmile/redmine-overrides/feat/redmine6-overrides/tampermonkey-v2.js
 // @supportURL   https://github.com/loitiSmile/redmine-overrides
 // @license      GPL-3.0
-// @version      2.2.0
+// @version      2.2.1
 // @tag          production
 // @tag          github-fetch
 // @match        https://*.alterway.fr/*
@@ -18,51 +18,56 @@
     // At the very start, hide the page to prevent flickering
     document.documentElement.style.visibility = 'hidden';
 
-    // Function to disable Opale and inject official Default Redmine 6 stylesheet
-    const applyDefaultTheme = () => {
-        // 1. Find and remove/disable Opale theme stylesheet
-        const opaleLink = document.querySelector('link[rel="stylesheet"][href*="/themes/opale/application"]');
-        if (opaleLink) {
-            opaleLink.disabled = true;
-            opaleLink.remove();
-        }
-
-        // 2. Create and inject the official Redmine 6.0 default stylesheet from jsDelivr CDN
+    // 1. Inject the official Redmine 6.0 default stylesheet as soon as <head> is ready
+    const injectDefaultTheme = () => {
+        if (document.getElementById("redmine-default-theme")) return;
         const defaultLink = document.createElement("link");
         defaultLink.id = "redmine-default-theme";
         defaultLink.rel = "stylesheet";
         defaultLink.media = "all";
         defaultLink.href = "https://cdn.jsdelivr.net/gh/redmine/redmine@6.0-stable/app/assets/stylesheets/application.css";
         
-        // Show page as soon as the stylesheet is loaded or fails
         defaultLink.onload = () => {
             document.documentElement.style.visibility = 'visible';
-            console.log("Tampermonkey: Default Redmine 6 theme loaded successfully.");
+            console.log("Tampermonkey: Default Redmine 6 theme injected successfully.");
         };
         defaultLink.onerror = () => {
             document.documentElement.style.visibility = 'visible';
             console.error("Tampermonkey: Failed to load default Redmine 6 stylesheet.");
         };
-
         document.head.appendChild(defaultLink);
     };
 
-    // --- Apply on document-start to prevent flash of Opale theme ---
     if (document.head) {
-        applyDefaultTheme();
+        injectDefaultTheme();
     } else {
-        const observer = new MutationObserver((mutations, obs) => {
+        const headObserver = new MutationObserver((mutations, obs) => {
             if (document.head) {
-                applyDefaultTheme();
+                injectDefaultTheme();
                 obs.disconnect();
             }
         });
-        observer.observe(document.documentElement, { childList: true, subtree: true });
+        headObserver.observe(document.documentElement, { childList: true, subtree: true });
     }
 
-    // --- 2. Inject CSS overrides from Github's sources ---
+    // 2. Disable Opale stylesheet as soon as it is appended by the browser parser
+    const disableOpale = (link) => {
+        link.disabled = true;
+        link.remove();
+        console.log("Tampermonkey: Successfully disabled Opale stylesheet.");
+    };
+
+    const opaleObserver = new MutationObserver(() => {
+        const opaleLink = document.querySelector('link[rel="stylesheet"][href*="/themes/opale/application"]');
+        if (opaleLink) {
+            disableOpale(opaleLink);
+            opaleObserver.disconnect(); // Stop observing once disabled
+        }
+    });
+    opaleObserver.observe(document.documentElement, { childList: true, subtree: true });
+
+    // 3. Inject CSS overrides from Github's sources
     const overrideHref = "https://raw.githubusercontent.com/loitiSmile/redmine-overrides/feat/redmine6-overrides/overrides.css";
-    // Fetch the override CSS file from GitHub
     fetch(overrideHref)
         .then(response => {
             if (!response.ok) throw new Error("Tampermonkey: Erreur chargement CSS override");
@@ -76,11 +81,10 @@
         })
         .catch(e => {
             console.error("Tampermonkey: Erreur injection CSS override:", e);
-            // Ensure page is visible even if overrides fail
             document.documentElement.style.visibility = 'visible';
         });
 
-    // --- 3. Adds priority colors dynamically ---
+    // 4. Adds priority colors dynamically
     const applyPriorityColors = () => {
         document.querySelectorAll('td.priority').forEach(td => {
             const text = td.textContent.trim().toLowerCase();
@@ -109,7 +113,6 @@
         });
     };
 
-    // --- 4. Apply priority colors on initial load and dynamically ---
     window.addEventListener('DOMContentLoaded', () => {
         applyPriorityColors();
         const observer = new MutationObserver(applyPriorityColors);
